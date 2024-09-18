@@ -1,5 +1,7 @@
 package br.com.mikaelmiranda.cm.model;
 
+import br.com.mikaelmiranda.cm.exception.ExplosaoException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,5 +39,33 @@ public class Field {
         } else {
             return false;
         }
+    }
+
+    void alternarMarcacao(){
+        if(!aberto){
+            marcado = !marcado;
+        }
+    }
+
+    boolean abrir(){
+        if(!aberto && !marcado){
+            aberto = true;
+
+            if(minado){
+                throw new ExplosaoException();
+            }
+
+            if(vizinhancaSegura()){
+                vizinhos.forEach(v -> v.abrir());
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean vizinhancaSegura(){
+        return vizinhos.stream().noneMatch(v -> v.minado);
     }
 }
