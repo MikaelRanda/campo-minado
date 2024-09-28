@@ -77,6 +77,10 @@ public class Field {
         minado = true;
     }
 
+    public boolean isMinado() {
+        return minado;
+    }
+
     public boolean isAberto(){
         return aberto;
     }

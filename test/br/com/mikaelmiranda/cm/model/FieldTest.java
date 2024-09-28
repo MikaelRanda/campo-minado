@@ -130,4 +130,132 @@ public class FieldTest {
 
         assertTrue(campo22.isAberto() && campo12.isFechado());
     }
+
+    @Test
+    void testeObjetivoAlcançadoDesvendado(){
+        field.abrir();
+        assertTrue(field.objetivoAlcancado());
+    }
+
+    @Test
+    void testeObjetivoAlcancadoProtegido(){
+        Field campo11 = new Field(1, 1);
+
+        campo11.minar();
+
+        campo11.alternarMarcacao();
+
+        assertTrue(campo11.objetivoAlcancado());
+    }
+
+    @Test
+    void testeObjetivoNaoAlcancadoCampoMinado(){
+        field.minar();
+        assertFalse(field.objetivoAlcancado());
+    }
+
+    @Test
+    void testeObjetivoNaoAlcancadoCampoSeguroFechado(){
+        assertFalse(field.objetivoAlcancado());
+    }
+
+    @Test
+    void testeMinasNaVizinhancaContador(){
+        Field vizinhoMinado1 = new Field(2, 2);
+        vizinhoMinado1.minar();
+
+        Field vizinhoMinado2 = new Field(2, 4);
+        vizinhoMinado2.minar();
+
+        Field vizinhoMinado3 = new Field(3, 4);
+        vizinhoMinado3.minar();
+
+        Field vizinhoMinado4 = new Field(4, 4);
+        vizinhoMinado4.minar();
+
+        Field vizinhoNaoMinado1 = new Field(2, 3);
+        Field vizinhoNaoMinado2 = new Field(3, 2);
+        Field vizinhoNaoMinado3 = new Field(4, 2);
+        Field vizinhoNaoMinado4 = new Field(4, 3);
+
+        field.adicionarVizinhos(vizinhoMinado1);
+        field.adicionarVizinhos(vizinhoMinado2);
+        field.adicionarVizinhos(vizinhoMinado3);
+        field.adicionarVizinhos(vizinhoMinado4);
+        field.adicionarVizinhos(vizinhoNaoMinado1);
+        field.adicionarVizinhos(vizinhoNaoMinado2);
+        field.adicionarVizinhos(vizinhoNaoMinado3);
+        field.adicionarVizinhos(vizinhoNaoMinado4);
+
+        assertEquals(4, field.minasNaVizinhanca());
+    }
+
+    @Test
+    void testeReiniciar(){
+        field.abrir();
+        field.minar();
+        field.alternarMarcacao();
+
+        field.reiniciar();
+
+        assertFalse(field.isAberto());
+        assertFalse(field.isMinado());
+        assertFalse(field.isMarcado());
+    }
+
+    @Test
+    void testeToStringMarcado(){
+        field.alternarMarcacao();
+        assertEquals("x", field.toString());
+    }
+
+    @Test
+    void testeToStringAbertoEMinado(){
+        field.minar();
+        try {
+            field.abrir();
+        } catch (ExplosaoException e) {}
+
+        assertEquals("*", field.toString());
+    }
+
+    @Test
+    void testeToStringContadorMinas(){
+        Field campoMinado1 = new Field(2, 2);
+        campoMinado1.minar();
+        Field campoMinado2 = new Field(2, 4);
+        campoMinado2.minar();
+        Field campoNaoMinado = new Field(2, 3);
+
+        field.adicionarVizinhos(campoMinado1);
+        field.adicionarVizinhos(campoMinado2);
+        field.adicionarVizinhos(campoNaoMinado);
+
+        field.abrir();
+
+        assertEquals("2", field.toString());
+    }
+
+    @Test
+    void testeToStringAberto(){
+        field.abrir();
+        assertEquals(" ", field.toString());
+    }
+
+    @Test
+    void testeToStringFechado(){
+        assertEquals("?", field.toString());
+    }
+
+    @Test
+    void testeGetLinha(){
+        Field campo53 = new Field(5, 3);
+        assertEquals(5, campo53.getLinha());
+    }
+
+    @Test
+    void testeGetColuna(){
+        Field campo53 = new Field(5, 3);
+        assertEquals(3, campo53.getColuna());
+    }
 }
