@@ -89,6 +89,10 @@ public class Field {
         return !isAberto();
     }
 
+    public List<Field> getVizinhos(){
+        return vizinhos;
+    }
+
     public int getLinha() {
         return linha;
     }
