@@ -22,6 +22,17 @@ public class Board {
         sortearMinas();
     }
 
+    public List<Field> getFields(){
+        return fields;
+    }
+
+    public Field getField(int linha, int coluna){
+        return fields.stream()
+                .filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
+                .findFirst()
+                .orElse(null);
+    }
+
     public void abrir(int linha, int coluna){
         fields.parallelStream()
                 .filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
@@ -53,14 +64,16 @@ public class Board {
     }
 
     private void sortearMinas() {
-        long minasArmadas = 0;
-        Predicate<Field> minado = c -> c.isMinado();
+        Predicate<Field> minado = Field::isMinado;
 
-        do {
-            minasArmadas = fields.stream().filter(minado).count();
+        while (fields.stream().filter(minado).count() < minas){
             int aleatorio = (int) (Math.random() * fields.size());
-            fields.get(aleatorio).minar();
-        } while (minasArmadas < minas);
+            Field campo = fields.get(aleatorio);
+
+            if (!campo.isMinado()){
+                campo.minar();
+            }
+        }
     }
 
     public boolean objetivoAlcancado(){
