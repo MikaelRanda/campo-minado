@@ -62,6 +62,7 @@ public class BoardController {
                 }
             }
 
+            System.out.println(board);
             System.out.println("Você ganhou!");
         } catch (ExplosaoException e){
             System.out.println(board);
