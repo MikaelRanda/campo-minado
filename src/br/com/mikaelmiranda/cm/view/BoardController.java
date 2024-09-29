@@ -46,6 +46,8 @@ public class BoardController {
         try {
 
             while (!board.objetivoAlcancado()){
+                System.out.println(board);
+
                 String digitado = capturarValorDigitado("Digite (x, y): ");
 
                 Iterator<Integer> xy = Arrays.stream(digitado.split(","))
@@ -62,6 +64,7 @@ public class BoardController {
 
             System.out.println("Você ganhou!");
         } catch (ExplosaoException e){
+            System.out.println(board);
             System.out.println("Você perdeu!");
         }
     }

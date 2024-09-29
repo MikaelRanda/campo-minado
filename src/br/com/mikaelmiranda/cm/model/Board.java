@@ -1,5 +1,7 @@
 package br.com.mikaelmiranda.cm.model;
 
+import br.com.mikaelmiranda.cm.exception.ExplosaoException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -34,10 +36,15 @@ public class Board {
     }
 
     public void abrir(int linha, int coluna){
-        fields.parallelStream()
+        try {
+            fields.parallelStream()
                 .filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
                 .findFirst()
                 .ifPresent(c -> c.abrir());
+        } catch (ExplosaoException e){
+            fields.forEach(c -> c.setAberto(true));
+            throw e;
+        }
     }
 
     public void alternarMarcacao(int linha, int coluna){
