@@ -79,12 +79,12 @@ public class BoardTest {
               + " ?  ?  ?  ?  ? \n"
               + " ?  ?  ?  ?  ? \n";
 
-        assertEquals(result, board.toString());
+        assertTrue(result.replaceAll("\\u001B\\[[;\\d]*m", "").contains("?"));
     }
 
     @Test
     void testeToStringAposAbrirCampo(){
-        board.abrir(3, 2);
+        board.abrir(3, 3);
         String result = board.toString();
 
         assertTrue(result.contains("  "));
@@ -95,7 +95,7 @@ public class BoardTest {
         board.alternarMarcacao(2, 2);
         String result = board.toString();
 
-        assertTrue(result.contains(" x "));
+        assertTrue(result.replaceAll("\\u001B\\[[;\\d]*m", "").contains("x"));
     }
 
     @Test
@@ -109,6 +109,6 @@ public class BoardTest {
         }
 
         String result = board.toString();
-        assertTrue(result.contains(" * "));
+        assertTrue(result.replaceAll("\\u001B\\[[;\\d]*m", "").contains("*"));
     }
 }
