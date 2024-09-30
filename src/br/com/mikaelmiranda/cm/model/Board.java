@@ -95,8 +95,33 @@ public class Board {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
+        //ANSI Codes to Change Colors
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_RED = "\u001B[31m";
+        final String ANSI_GREEN = "\u001B[32m";
+        final String ANSI_YELLOW = "\u001B[33m";
+        final String ANSI_BLUE = "\u001B[34m";
+        final String ANSI_PURPLE = "\u001B[35m";
+        final String ANSI_CYAN = "\u001B[36m";
+
+        sb.append("  ");
+        for (int c = 0; c < colunas; c++){
+            sb.append(" ")
+                    .append(ANSI_CYAN)
+                    .append(c)
+                    .append(ANSI_RESET)
+                    .append(" ");
+        }
+
+        sb.append("\n");
+
         int i = 0;
         for (int l = 0; l < linhas; l++){
+            sb.append(ANSI_CYAN)
+                    .append(l)
+                    .append(ANSI_RESET)
+                    .append(" ");
+
             for (int c = 0; c < colunas; c++){
                 sb.append(" ");
                 sb.append(fields.get(i));
