@@ -122,12 +122,22 @@ public class Field {
     }
 
     public String toString(){
+
+        //ANSI Codes to Change Colors
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_RED = "\u001B[31m";
+        final String ANSI_GREEN = "\u001B[32m";
+        final String ANSI_YELLOW = "\u001B[33m";
+        final String ANSI_BLUE = "\u001B[34m";
+        final String ANSI_PURPLE = "\u001B[35m";
+        final String ANSI_CYAN = "\u001B[36m";
+
         if(marcado){
-            return "x";
+            return ANSI_YELLOW + "x" + ANSI_RESET;
         } else if (aberto && minado){
-            return "*";
+            return ANSI_RED + "*" + ANSI_RESET;
         } else if (aberto && minasNaVizinhanca() > 0){
-            return Long.toString(minasNaVizinhanca());
+            return ANSI_GREEN + Long.toString(minasNaVizinhanca()) + ANSI_RESET;
         } else if (aberto){
             return " ";
         } else {
